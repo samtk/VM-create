@@ -15,24 +15,38 @@ namespace webConsoleApplication
     {
         static void Main(string[] args)
         {
+            String defaultOS = "KnownLinuxVirtualMachineImage.CentOS7_2";
+            String defaultName = "default";
+            String defaultRG = "test-vm-app";
+            String defaultDNS = "mylinuxvmdns";
+            String defaultUser = "user";
+            String defaultPass = "Password1!";
+
+            Console.WriteLine("Create your VM. Leave blank for default option ");
             Console.WriteLine("select your OS ");
             String OS = Console.ReadLine();
+            if (OS.Equals("")) OS = defaultOS;
             Console.WriteLine("select your VM name ");
             String vmname = Console.ReadLine();
+            if (vmname.Equals("")) vmname = defaultName;
             Console.WriteLine("select your resource group ");
             String rg = Console.ReadLine();
+            if (rg.Equals("")) rg = defaultRG;
             Console.WriteLine("select your DNS name ");
             String dns = Console.ReadLine();
+            if (dns.Equals("")) dns = defaultDNS;
             Console.WriteLine("select your username ");
             String user = Console.ReadLine();
+            if (user.Equals("")) user = defaultUser;
             Console.WriteLine("select your password ");
             String password = Console.ReadLine();
+            if (password.Equals("")) password = defaultPass; 
 
             try
             {
                 var authProperties = "C:\\Users\\" + Environment.UserName + "\\azure\\auth.properties";
                 IAzure azure = Azure.Authenticate(authProperties).WithDefaultSubscription();
-                var linuxVM = azure.VirtualMachines.Define(OS)
+                var linuxVM = azure.VirtualMachines.Define(vmname)
                     .WithRegion(Region.UKWest)
                     .WithNewResourceGroup(rg)
                     .WithNewPrimaryNetwork("10.0.0.0/28")
