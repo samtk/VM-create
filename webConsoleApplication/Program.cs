@@ -19,7 +19,7 @@ namespace webConsoleApplication
             String defaultName = "default";
             String defaultRG = "test-vm-app";
             String defaultDNS = "mylinuxvmdns";
-            String defaultUser = "user";
+            String defaultUser = "BasicUser";
             String defaultPass = "Password1!";
 
             Console.WriteLine("Create your VM. Leave blank for default option ");
@@ -60,6 +60,11 @@ namespace webConsoleApplication
                 Console.WriteLine("VM properties set");
                 var machine = azure.VirtualMachines.Create(linuxVM);
                 Console.WriteLine("VM created");
+
+                Console.WriteLine("VM Deleting");
+                azure.VirtualMachines.DeleteByResourceGroup(rg, vmname);
+            
+
             }
             catch (Exception exc)
             {
@@ -67,32 +72,8 @@ namespace webConsoleApplication
                 Console.ReadLine();
             }
 
+            
 
-
-
-            /*
-            try
-            {
-                var authProperties = "C:\\Users\\" + Environment.UserName + "\\azure\\auth.properties";
-                IAzure azure = Azure.Authenticate(authProperties).WithDefaultSubscription();
-                var linuxVM = azure.VirtualMachines.Define("Linux")
-                    .WithRegion(Region.UKWest)
-                    .WithNewResourceGroup("test-vm-app")
-                    .WithNewPrimaryNetwork("10.0.0.0/28")
-                    .WithPrimaryPrivateIPAddressDynamic()
-                    .WithNewPrimaryPublicIPAddress("mylinuxvmdns")
-                    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.CentOS7_2)
-                    .WithRootUsername("sam")
-                    .WithRootPassword("Password1!")
-                    .WithSize(VirtualMachineSizeTypes.StandardA1v2);
-
-                Console.WriteLine("VM properties set");
-                var machine = azure.VirtualMachines.Create(linuxVM);
-                Console.WriteLine("VM created");
-            }
-            catch (Exception exc) {
-                Console.WriteLine(exc.Message);
-            }*/
         }
     }
 }
