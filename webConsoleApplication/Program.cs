@@ -28,24 +28,57 @@ namespace webConsoleApplication
             Console.WriteLine("select your password ");
             String password = Console.ReadLine();
 
-            /*
-            //var authProperties = "C:\\Users\\" + Environment.UserName + "\\azure\\auth.properties";
-            var authProperties = "C:\\Users\\" + Environment.UserName + "\\azure\\auth.properties";
-            IAzure azure = Azure.Authenticate(authProperties).WithDefaultSubscription();
-            var linuxVM = azure.VirtualMachines.Define("Linux")
-                .WithRegion(Region.UKWest)
-                .WithNewResourceGroup("test-vm-app")
-                .WithNewPrimaryNetwork("10.0.0.0/28")
-                .WithPrimaryPrivateIPAddressDynamic()
-                .WithNewPrimaryPublicIPAddress("mylinuxvmdns")
-                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.CentOS7_2)
-                .WithRootUsername("sam")
-                .WithRootPassword("Password1!")
-                .WithSize(VirtualMachineSizeTypes.StandardA1v2);
+            try
+            {
+                var authProperties = "C:\\Users\\" + Environment.UserName + "\\azure\\auth.properties";
+                IAzure azure = Azure.Authenticate(authProperties).WithDefaultSubscription();
+                var linuxVM = azure.VirtualMachines.Define(OS)
+                    .WithRegion(Region.UKWest)
+                    .WithNewResourceGroup(rg)
+                    .WithNewPrimaryNetwork("10.0.0.0/28")
+                    .WithPrimaryPrivateIPAddressDynamic()
+                    .WithNewPrimaryPublicIPAddress(dns)
+                    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.CentOS7_2)
+                    .WithRootUsername(user)
+                    .WithRootPassword(password)
+                    .WithSize(VirtualMachineSizeTypes.StandardA1v2);
 
-            Console.WriteLine("VM properties set");
-            var machine = azure.VirtualMachines.Create(linuxVM);
-            Console.WriteLine("VM created");*/
+                Console.WriteLine("VM properties set");
+                var machine = azure.VirtualMachines.Create(linuxVM);
+                Console.WriteLine("VM created");
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+                Console.ReadLine();
+            }
+
+
+
+
+            /*
+            try
+            {
+                var authProperties = "C:\\Users\\" + Environment.UserName + "\\azure\\auth.properties";
+                IAzure azure = Azure.Authenticate(authProperties).WithDefaultSubscription();
+                var linuxVM = azure.VirtualMachines.Define("Linux")
+                    .WithRegion(Region.UKWest)
+                    .WithNewResourceGroup("test-vm-app")
+                    .WithNewPrimaryNetwork("10.0.0.0/28")
+                    .WithPrimaryPrivateIPAddressDynamic()
+                    .WithNewPrimaryPublicIPAddress("mylinuxvmdns")
+                    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.CentOS7_2)
+                    .WithRootUsername("sam")
+                    .WithRootPassword("Password1!")
+                    .WithSize(VirtualMachineSizeTypes.StandardA1v2);
+
+                Console.WriteLine("VM properties set");
+                var machine = azure.VirtualMachines.Create(linuxVM);
+                Console.WriteLine("VM created");
+            }
+            catch (Exception exc) {
+                Console.WriteLine(exc.Message);
+            }*/
         }
     }
 }
